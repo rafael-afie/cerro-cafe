@@ -1,0 +1,1152 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Cerro Café — Café de especialidad en Juriquilla</title>
+<meta name="description" content="Cafetería de especialidad en Juriquilla, Querétaro. Granos de origen de Chiapas y Veracruz. Espresso, V60, Chemex, cold brew." />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght,SOFT,WONK@9..144,300..900,0..100,0..1&family=Instrument+Serif:ital@0;1&family=Inter+Tight:wght@300;400;500;600&display=swap" rel="stylesheet" />
+
+<style>
+  /* ========================================================
+     TOKENS & RESET
+     ======================================================== */
+  :root {
+    /* Paleta: tierra de cafetal + cereza madura */
+    --musgo: #2d3a1f;        /* verde musgo profundo, dominante */
+    --musgo-dark: #1f2916;
+    --crema: #f4ede0;        /* crema cálido, fondo principal */
+    --crema-soft: #ebe2d1;
+    --terracota: #c4663d;    /* acento sorpresa: cereza del café */
+    --terracota-dark: #a0512f;
+    --tinta: #1a1a17;        /* casi negro cálido */
+    --piedra: #6b6557;       /* gris cálido para texto secundario */
+    --olivo: #8a9270;        /* verde olivo del logo */
+
+    --serif: 'Fraunces', Georgia, serif;
+    --editorial: 'Instrument Serif', Georgia, serif;
+    --sans: 'Inter Tight', -apple-system, sans-serif;
+
+    --max: 1400px;
+    --gutter: clamp(1.25rem, 4vw, 3rem);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
+
+  body {
+    font-family: var(--sans);
+    background: var(--crema);
+    color: var(--tinta);
+    line-height: 1.5;
+    overflow-x: hidden;
+    font-weight: 400;
+  }
+
+  /* Textura de papel sutil sobre todo el body */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 1;
+    opacity: 0.4;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' /%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.35'/%3E%3C/svg%3E");
+    mix-blend-mode: multiply;
+  }
+
+  img { max-width: 100%; display: block; }
+
+  ::selection { background: var(--terracota); color: var(--crema); }
+
+  /* ========================================================
+     NAV
+     ======================================================== */
+  .nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    padding: 1.25rem var(--gutter);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    background: rgba(244, 237, 224, 0.7);
+    border-bottom: 1px solid transparent;
+    transition: border-color .4s ease, background .4s ease;
+  }
+  .nav.scrolled { border-bottom-color: rgba(45, 58, 31, 0.12); }
+
+  .nav__brand {
+    display: flex;
+    align-items: center;
+    gap: .65rem;
+    font-family: var(--serif);
+    font-weight: 500;
+    font-size: 1.15rem;
+    letter-spacing: -0.02em;
+    color: var(--musgo);
+  }
+  .nav__brand svg { width: 28px; height: 28px; }
+
+  .nav__links {
+    display: flex;
+    gap: 2rem;
+    list-style: none;
+  }
+  .nav__links a {
+    font-size: .82rem;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--musgo);
+    text-decoration: none;
+    font-weight: 500;
+    position: relative;
+    padding-bottom: 2px;
+    transition: color .3s;
+  }
+  .nav__links a::after {
+    content: '';
+    position: absolute;
+    left: 0; bottom: 0;
+    width: 0; height: 1px;
+    background: var(--terracota);
+    transition: width .35s ease;
+  }
+  .nav__links a:hover { color: var(--terracota); }
+  .nav__links a:hover::after { width: 100%; }
+
+  @media (max-width: 720px) {
+    .nav__links { display: none; }
+  }
+
+  /* ========================================================
+     HERO
+     ======================================================== */
+  .hero {
+    min-height: 100vh;
+    padding: 8rem var(--gutter) 4rem;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 3rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  @media (min-width: 900px) {
+    .hero {
+      grid-template-columns: 1.2fr 1fr;
+      align-items: end;
+      gap: 5rem;
+    }
+  }
+
+  .hero__marker {
+    position: absolute;
+    top: 7rem;
+    right: var(--gutter);
+    font-family: var(--editorial);
+    font-style: italic;
+    font-size: .9rem;
+    color: var(--piedra);
+    letter-spacing: 0.05em;
+  }
+  .hero__marker::before {
+    content: '— ';
+  }
+
+  .hero__title {
+    font-family: var(--serif);
+    font-weight: 300;
+    font-size: clamp(3.5rem, 13vw, 11rem);
+    line-height: 0.92;
+    letter-spacing: -0.04em;
+    color: var(--musgo);
+    /* Variable axis SOFT y WONK para personalidad */
+    font-variation-settings: "SOFT" 30, "WONK" 1, "opsz" 144;
+  }
+
+  .hero__title .italic {
+    font-family: var(--editorial);
+    font-style: italic;
+    font-weight: 400;
+    color: var(--terracota);
+    display: inline-block;
+    padding-right: .15em;
+  }
+
+  .hero__sub {
+    font-family: var(--editorial);
+    font-style: italic;
+    font-size: clamp(1.1rem, 1.8vw, 1.45rem);
+    color: var(--piedra);
+    margin-top: 1.5rem;
+    max-width: 28ch;
+    line-height: 1.4;
+  }
+
+  .hero__location {
+    margin-top: 2.5rem;
+    border-top: 1px solid rgba(45, 58, 31, 0.2);
+    padding-top: 1.5rem;
+    display: flex;
+    gap: 2.5rem;
+    flex-wrap: wrap;
+  }
+  .hero__location-item .label {
+    display: block;
+    font-size: .7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    color: var(--piedra);
+    margin-bottom: .35rem;
+  }
+  .hero__location-item .value {
+    font-family: var(--serif);
+    font-size: 1.05rem;
+    color: var(--musgo);
+    font-weight: 500;
+  }
+
+  /* Visual del hero — "fotografía" placeholder con composición */
+  .hero__visual {
+    position: relative;
+    aspect-ratio: 4/5;
+    background: linear-gradient(135deg, #6b5840 0%, #3d2f20 100%);
+    border-radius: 2px;
+    overflow: hidden;
+    box-shadow: 0 30px 60px -20px rgba(45, 58, 31, 0.4);
+  }
+
+  .hero__visual::before {
+    content: 'IMAGEN HERO';
+    position: absolute;
+    top: 1rem; left: 1rem;
+    font-size: .65rem;
+    letter-spacing: 0.2em;
+    color: rgba(244, 237, 224, 0.6);
+    z-index: 2;
+  }
+  .hero__visual::after {
+    content: 'Barista vertiendo V60 con luz lateral cálida sobre madera';
+    position: absolute;
+    bottom: 1.5rem; left: 1.5rem; right: 1.5rem;
+    font-family: var(--editorial);
+    font-style: italic;
+    font-size: 1rem;
+    color: var(--crema);
+    z-index: 2;
+    line-height: 1.3;
+  }
+
+  /* "vapor" decorativo sobre la imagen */
+  .hero__steam {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse at 30% 70%, rgba(244, 237, 224, 0.15), transparent 50%),
+      radial-gradient(ellipse at 70% 40%, rgba(196, 102, 61, 0.2), transparent 60%);
+    z-index: 1;
+  }
+
+  .hero__num {
+    position: absolute;
+    bottom: 1rem;
+    left: var(--gutter);
+    font-family: var(--editorial);
+    font-style: italic;
+    font-size: 5rem;
+    color: var(--musgo);
+    opacity: 0.12;
+    line-height: 1;
+    pointer-events: none;
+  }
+
+  /* ========================================================
+     TICKER (banda en movimiento, divider entre secciones)
+     ======================================================== */
+  .ticker {
+    background: var(--musgo);
+    color: var(--crema);
+    padding: 1.1rem 0;
+    overflow: hidden;
+    border-top: 1px solid var(--musgo-dark);
+    border-bottom: 1px solid var(--musgo-dark);
+  }
+  .ticker__track {
+    display: flex;
+    gap: 3rem;
+    width: max-content;
+    animation: ticker 35s linear infinite;
+    font-family: var(--editorial);
+    font-style: italic;
+    font-size: 1.4rem;
+    white-space: nowrap;
+  }
+  .ticker__track span { display: flex; align-items: center; gap: 3rem; }
+  .ticker__track .dot {
+    width: 6px; height: 6px;
+    background: var(--terracota);
+    border-radius: 50%;
+  }
+  @keyframes ticker {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+
+  /* ========================================================
+     SECCIÓN MENÚ
+     ======================================================== */
+  .section {
+    padding: 6rem var(--gutter);
+    max-width: var(--max);
+    margin: 0 auto;
+    position: relative;
+  }
+
+  .section__head {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2rem;
+    margin-bottom: 5rem;
+    align-items: end;
+  }
+  @media (min-width: 800px) {
+    .section__head { grid-template-columns: auto 1fr auto; }
+  }
+
+  .section__num {
+    font-family: var(--editorial);
+    font-style: italic;
+    font-size: 1rem;
+    color: var(--terracota);
+    letter-spacing: 0.1em;
+  }
+  .section__num::before { content: '⟶  '; }
+
+  .section__title {
+    font-family: var(--serif);
+    font-weight: 300;
+    font-size: clamp(2.5rem, 7vw, 5.5rem);
+    letter-spacing: -0.03em;
+    line-height: 1;
+    color: var(--musgo);
+    font-variation-settings: "SOFT" 50;
+  }
+  .section__title em {
+    font-family: var(--editorial);
+    font-style: italic;
+    font-weight: 400;
+    color: var(--terracota);
+  }
+
+  .section__kicker {
+    font-family: var(--editorial);
+    font-style: italic;
+    font-size: 1.05rem;
+    color: var(--piedra);
+    max-width: 30ch;
+  }
+
+  /* Grid de métodos */
+  .methods {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+    margin-bottom: 6rem;
+  }
+  @media (min-width: 700px) {
+    .methods { grid-template-columns: repeat(2, 1fr); gap: 2rem; }
+  }
+  @media (min-width: 1100px) {
+    .methods { grid-template-columns: repeat(4, 1fr); }
+  }
+
+  .method {
+    position: relative;
+    transition: transform .5s cubic-bezier(.2,.8,.2,1);
+  }
+  .method:hover { transform: translateY(-6px); }
+
+  .method__img {
+    aspect-ratio: 3/4;
+    border-radius: 2px;
+    overflow: hidden;
+    position: relative;
+    background: linear-gradient(160deg, var(--musgo-dark), var(--musgo));
+    margin-bottom: 1.25rem;
+    box-shadow: 0 20px 40px -25px rgba(45, 58, 31, 0.5);
+  }
+  .method__img::before {
+    content: 'IMG';
+    position: absolute;
+    top: .75rem; right: .75rem;
+    font-size: .6rem;
+    letter-spacing: 0.18em;
+    color: rgba(244, 237, 224, 0.5);
+  }
+  .method__img-placeholder {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    text-align: center;
+    font-family: var(--editorial);
+    font-style: italic;
+    color: rgba(244, 237, 224, 0.85);
+    font-size: .95rem;
+    line-height: 1.4;
+  }
+
+  .method__head {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 1rem;
+    border-bottom: 1px solid rgba(45, 58, 31, 0.2);
+    padding-bottom: .65rem;
+    margin-bottom: .65rem;
+  }
+  .method__name {
+    font-family: var(--serif);
+    font-size: 1.5rem;
+    font-weight: 400;
+    color: var(--musgo);
+    letter-spacing: -0.02em;
+  }
+  .method__price {
+    font-family: var(--editorial);
+    font-style: italic;
+    font-size: 1.1rem;
+    color: var(--terracota);
+  }
+  .method__desc {
+    font-size: .9rem;
+    color: var(--piedra);
+    line-height: 1.55;
+  }
+  .method__origin {
+    margin-top: .65rem;
+    font-size: .7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--olivo);
+    font-weight: 500;
+  }
+
+  /* Subseccion granos */
+  .origins {
+    background: var(--musgo);
+    color: var(--crema);
+    padding: 4rem var(--gutter);
+    margin: 4rem calc(var(--gutter) * -1) 4rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .origins__inner {
+    max-width: var(--max);
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 3rem;
+  }
+  @media (min-width: 800px) {
+    .origins__inner { grid-template-columns: 1fr 1fr; gap: 4rem; }
+  }
+  .origins__title {
+    font-family: var(--serif);
+    font-weight: 300;
+    font-size: clamp(2rem, 4.5vw, 3.5rem);
+    line-height: 1;
+    letter-spacing: -0.02em;
+  }
+  .origins__title em {
+    font-family: var(--editorial);
+    font-style: italic;
+    color: var(--terracota);
+  }
+  .origin-card {
+    border-top: 1px solid rgba(244, 237, 224, 0.25);
+    padding-top: 1.5rem;
+    margin-bottom: 2rem;
+  }
+  .origin-card__num {
+    font-family: var(--editorial);
+    font-style: italic;
+    color: var(--terracota);
+    font-size: .9rem;
+    margin-bottom: .5rem;
+  }
+  .origin-card__name {
+    font-family: var(--serif);
+    font-size: 1.7rem;
+    font-weight: 400;
+    margin-bottom: .5rem;
+    letter-spacing: -0.02em;
+  }
+  .origin-card__notes {
+    font-family: var(--editorial);
+    font-style: italic;
+    color: rgba(244, 237, 224, 0.8);
+    font-size: 1rem;
+  }
+
+  /* Pasteles */
+  .pastry {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2rem;
+    align-items: center;
+  }
+  @media (min-width: 800px) {
+    .pastry { grid-template-columns: 1fr 1fr; gap: 4rem; }
+  }
+  .pastry__visual {
+    aspect-ratio: 4/3;
+    background: linear-gradient(135deg, #d4a574, #8b6240);
+    border-radius: 2px;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 25px 50px -25px rgba(0,0,0,0.3);
+  }
+  .pastry__visual-label {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    text-align: center;
+    font-family: var(--editorial);
+    font-style: italic;
+    color: rgba(255,255,255,0.9);
+    font-size: 1rem;
+  }
+  .pastry__visual::before {
+    content: 'IMG';
+    position: absolute;
+    top: .75rem; right: .75rem;
+    font-size: .6rem;
+    letter-spacing: 0.18em;
+    color: rgba(255,255,255,0.6);
+  }
+
+  .pastry__list { list-style: none; }
+  .pastry__item {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 1rem;
+    padding: 1rem 0;
+    border-bottom: 1px dashed rgba(45, 58, 31, 0.25);
+  }
+  .pastry__item:last-child { border-bottom: none; }
+  .pastry__name {
+    font-family: var(--serif);
+    font-size: 1.15rem;
+    color: var(--musgo);
+    font-weight: 400;
+  }
+  .pastry__name span {
+    font-family: var(--editorial);
+    font-style: italic;
+    font-size: .85rem;
+    color: var(--piedra);
+    display: block;
+    margin-top: .15rem;
+  }
+  .pastry__price {
+    font-family: var(--editorial);
+    font-style: italic;
+    color: var(--terracota);
+    font-size: 1.05rem;
+    white-space: nowrap;
+  }
+
+  .pastry__partner {
+    margin-top: 1.5rem;
+    font-size: .75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    color: var(--piedra);
+  }
+  .pastry__partner strong {
+    color: var(--musgo);
+    font-weight: 500;
+  }
+
+  /* ========================================================
+     CONTACTO
+     ======================================================== */
+  .contact {
+    background: var(--musgo);
+    color: var(--crema);
+    padding: 7rem var(--gutter);
+    position: relative;
+    overflow: hidden;
+  }
+  .contact::before {
+    content: '';
+    position: absolute;
+    top: -10%;
+    right: -5%;
+    width: 50%;
+    aspect-ratio: 1;
+    background: radial-gradient(circle, rgba(196, 102, 61, 0.18), transparent 70%);
+    pointer-events: none;
+  }
+  .contact__inner {
+    max-width: var(--max);
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
+  }
+
+  .contact__head {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    margin-bottom: 4rem;
+    align-items: end;
+  }
+  @media (min-width: 800px) {
+    .contact__head { grid-template-columns: auto 1fr; gap: 3rem; }
+  }
+  .contact__num {
+    font-family: var(--editorial);
+    font-style: italic;
+    color: var(--terracota);
+  }
+  .contact__title {
+    font-family: var(--serif);
+    font-weight: 300;
+    font-size: clamp(2.5rem, 7vw, 5.5rem);
+    line-height: 1;
+    letter-spacing: -0.03em;
+    font-variation-settings: "SOFT" 50;
+  }
+  .contact__title em {
+    font-family: var(--editorial);
+    font-style: italic;
+    color: var(--terracota);
+  }
+
+  .contact__grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 3rem;
+  }
+  @media (min-width: 900px) {
+    .contact__grid { grid-template-columns: 1.3fr 1fr; gap: 5rem; }
+  }
+
+  .contact__owner {
+    border-top: 1px solid rgba(244, 237, 224, 0.25);
+    padding-top: 2rem;
+  }
+  .contact__owner-label {
+    font-size: .7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    color: rgba(244, 237, 224, 0.6);
+    margin-bottom: .75rem;
+  }
+  .contact__owner-name {
+    font-family: var(--serif);
+    font-size: 2rem;
+    font-weight: 400;
+    margin-bottom: .5rem;
+    letter-spacing: -0.02em;
+  }
+  .contact__owner-role {
+    font-family: var(--editorial);
+    font-style: italic;
+    color: rgba(244, 237, 224, 0.75);
+    margin-bottom: 2rem;
+  }
+
+  .contact__list { list-style: none; }
+  .contact__list li {
+    padding: 1.25rem 0;
+    border-bottom: 1px solid rgba(244, 237, 224, 0.15);
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+  .contact__list .label {
+    font-size: .7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    color: rgba(244, 237, 224, 0.6);
+  }
+  .contact__list .value {
+    font-family: var(--serif);
+    font-size: 1.1rem;
+    color: var(--crema);
+  }
+  .contact__list a {
+    color: var(--crema);
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    transition: border-color .3s, color .3s;
+  }
+  .contact__list a:hover {
+    color: var(--terracota);
+    border-bottom-color: var(--terracota);
+  }
+
+  /* CTA Instagram */
+  .ig-card {
+    background: var(--terracota);
+    color: var(--crema);
+    padding: 2.5rem 2rem;
+    border-radius: 2px;
+    position: relative;
+    overflow: hidden;
+    transition: transform .4s ease;
+  }
+  .ig-card:hover { transform: translateY(-4px); }
+  .ig-card__label {
+    font-size: .7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    opacity: 0.8;
+    margin-bottom: 1rem;
+  }
+  .ig-card__handle {
+    font-family: var(--serif);
+    font-size: clamp(1.6rem, 3vw, 2.2rem);
+    font-weight: 500;
+    letter-spacing: -0.02em;
+    margin-bottom: 1rem;
+    line-height: 1.1;
+  }
+  .ig-card__desc {
+    font-family: var(--editorial);
+    font-style: italic;
+    font-size: 1rem;
+    margin-bottom: 1.5rem;
+    line-height: 1.4;
+  }
+  .ig-card__btn {
+    display: inline-flex;
+    align-items: center;
+    gap: .65rem;
+    background: var(--crema);
+    color: var(--musgo);
+    padding: .85rem 1.4rem;
+    border-radius: 999px;
+    text-decoration: none;
+    font-size: .82rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    transition: gap .3s ease;
+  }
+  .ig-card__btn:hover { gap: 1rem; }
+
+  .map-cta {
+    margin-top: 1.5rem;
+    background: transparent;
+    border: 1px solid rgba(244, 237, 224, 0.3);
+    color: var(--crema);
+    padding: 2rem;
+    border-radius: 2px;
+    text-decoration: none;
+    display: block;
+    transition: border-color .3s, background .3s;
+  }
+  .map-cta:hover {
+    border-color: var(--terracota);
+    background: rgba(196, 102, 61, 0.08);
+  }
+  .map-cta__label {
+    font-size: .7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    opacity: 0.7;
+    margin-bottom: .5rem;
+  }
+  .map-cta__text {
+    font-family: var(--serif);
+    font-size: 1.2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  /* ========================================================
+     FOOTER
+     ======================================================== */
+  .footer {
+    background: var(--musgo-dark);
+    color: rgba(244, 237, 224, 0.6);
+    padding: 2.5rem var(--gutter);
+    text-align: center;
+    font-size: .8rem;
+    letter-spacing: 0.05em;
+  }
+  .footer__brand {
+    font-family: var(--editorial);
+    font-style: italic;
+    color: var(--terracota);
+    font-size: 1rem;
+    margin-bottom: .5rem;
+  }
+
+  /* ========================================================
+     ANIMACIONES SCROLL-REVEAL
+     ======================================================== */
+  .reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity .9s cubic-bezier(.2,.7,.2,1), transform .9s cubic-bezier(.2,.7,.2,1);
+  }
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .reveal-stagger > * {
+    opacity: 0;
+    transform: translateY(25px);
+    transition: opacity .8s ease, transform .8s ease;
+  }
+  .reveal-stagger.visible > * {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .reveal-stagger.visible > *:nth-child(1) { transition-delay: 0s; }
+  .reveal-stagger.visible > *:nth-child(2) { transition-delay: .1s; }
+  .reveal-stagger.visible > *:nth-child(3) { transition-delay: .2s; }
+  .reveal-stagger.visible > *:nth-child(4) { transition-delay: .3s; }
+
+  /* Hero entrance — animación al cargar */
+  .hero-enter > * { opacity: 0; transform: translateY(20px); animation: heroIn 1.2s cubic-bezier(.2,.7,.2,1) forwards; }
+  .hero-enter > *:nth-child(1) { animation-delay: .15s; }
+  .hero-enter > *:nth-child(2) { animation-delay: .35s; }
+  .hero-enter > *:nth-child(3) { animation-delay: .55s; }
+  .hero-enter > *:nth-child(4) { animation-delay: .75s; }
+  @keyframes heroIn {
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: .01ms !important;
+      transition-duration: .01ms !important;
+    }
+  }
+</style>
+</head>
+<body>
+
+<!-- ======== NAV ======== -->
+<nav class="nav" id="nav">
+  <a href="#inicio" class="nav__brand">
+    <!-- Logo: montaña estilizada con la M de Mar/montaña -->
+    <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <path d="M2 26 L11 10 L16 18 L21 8 L30 26 Z" fill="#2d3a1f" stroke="#2d3a1f" stroke-linejoin="round" stroke-width="1.2"/>
+      <circle cx="22" cy="6" r="2" fill="#c4663d"/>
+    </svg>
+    <span>Cerro Café</span>
+  </a>
+  <ul class="nav__links">
+    <li><a href="#inicio">Inicio</a></li>
+    <li><a href="#menu">Menú</a></li>
+    <li><a href="#contacto">Visítanos</a></li>
+  </ul>
+</nav>
+
+<!-- ======== HERO ======== -->
+<header class="hero" id="inicio">
+  <span class="hero__marker">Juriquilla, Querétaro</span>
+
+  <div class="hero-enter">
+    <span class="section__num">001 — Café de altura</span>
+    <h1 class="hero__title">
+      Café <span class="italic">de</span> origen,<br />
+      tostado <span class="italic">aquí</span>.
+    </h1>
+    <p class="hero__sub">
+      Granos selectos de Chiapas y Veracruz, preparados por baristas certificados en una cafetería pensada para quedarse un rato.
+    </p>
+
+    <div class="hero__location">
+      <div class="hero__location-item">
+        <span class="label">Estamos en</span>
+        <span class="value">Juriquilla, Qro.</span>
+      </div>
+      <div class="hero__location-item">
+        <span class="label">Horario</span>
+        <span class="value">Lun–Dom · 7:30–21:00</span>
+      </div>
+      <div class="hero__location-item">
+        <span class="label">Síguenos</span>
+        <span class="value">@cerrocafe.qro</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="hero__visual hero-enter">
+    <div class="hero__steam"></div>
+  </div>
+
+  <span class="hero__num">01</span>
+</header>
+
+<!-- ======== TICKER ======== -->
+<div class="ticker" aria-hidden="true">
+  <div class="ticker__track">
+    <span>Tueste local <span class="dot"></span> Granos de origen <span class="dot"></span> Chiapas · Veracruz <span class="dot"></span> Espresso · V60 · Chemex · Cold Brew <span class="dot"></span> Pasteles La Costra <span class="dot"></span></span>
+    <span>Tueste local <span class="dot"></span> Granos de origen <span class="dot"></span> Chiapas · Veracruz <span class="dot"></span> Espresso · V60 · Chemex · Cold Brew <span class="dot"></span> Pasteles La Costra <span class="dot"></span></span>
+  </div>
+</div>
+
+<!-- ======== MENÚ ======== -->
+<section class="section" id="menu">
+  <div class="section__head reveal">
+    <span class="section__num">002 — La carta</span>
+    <h2 class="section__title">Cuatro métodos,<br /><em>una obsesión</em>.</h2>
+    <p class="section__kicker">Cada método cuenta una historia distinta del mismo grano. Aquí los preparamos como deben hacerse.</p>
+  </div>
+
+  <!-- Métodos -->
+  <div class="methods reveal-stagger">
+
+    <article class="method">
+      <div class="method__img" style="background: linear-gradient(160deg, #3d2820, #6b3d28);">
+        <div class="method__img-placeholder">Espresso recién extraído cayendo en taza de cerámica blanca</div>
+      </div>
+      <div class="method__head">
+        <h3 class="method__name">Espresso</h3>
+        <span class="method__price">$45</span>
+      </div>
+      <p class="method__desc">Doble shot, extracción de 28 segundos. Cuerpo intenso, crema avellanada.</p>
+      <span class="method__origin">Origen — Veracruz</span>
+    </article>
+
+    <article class="method">
+      <div class="method__img" style="background: linear-gradient(160deg, #2d3a1f, #4a5530);">
+        <div class="method__img-placeholder">Vertido en V60 con goteo lento sobre fondo de madera oscura</div>
+      </div>
+      <div class="method__head">
+        <h3 class="method__name">V60</h3>
+        <span class="method__price">$70</span>
+      </div>
+      <p class="method__desc">Filtrado manual, notas florales y cítricas. Limpio, brillante, sutil.</p>
+      <span class="method__origin">Origen — Chiapas</span>
+    </article>
+
+    <article class="method">
+      <div class="method__img" style="background: linear-gradient(160deg, #5c4429, #8b6240);">
+        <div class="method__img-placeholder">Chemex de cristal con café ámbar siendo servido a una taza</div>
+      </div>
+      <div class="method__head">
+        <h3 class="method__name">Chemex</h3>
+        <span class="method__price">$80</span>
+      </div>
+      <p class="method__desc">Para compartir. Cuerpo medio, dulzor a chocolate y caramelo.</p>
+      <span class="method__origin">Origen — Veracruz</span>
+    </article>
+
+    <article class="method">
+      <div class="method__img" style="background: linear-gradient(160deg, #1f2916, #2d3a1f);">
+        <div class="method__img-placeholder">Cold brew servido en vaso alto con hielo y luz de tarde</div>
+      </div>
+      <div class="method__head">
+        <h3 class="method__name">Cold Brew</h3>
+        <span class="method__price">$65</span>
+      </div>
+      <p class="method__desc">Extracción en frío, 18 horas. Suave, dulce, sin amargor.</p>
+      <span class="method__origin">Origen — Chiapas</span>
+    </article>
+
+  </div>
+
+  <!-- Subseccion ORIGENES -->
+  <div class="origins reveal">
+    <div class="origins__inner">
+      <div>
+        <h3 class="origins__title">El grano <em>importa</em>.</h3>
+        <p style="font-family: var(--editorial); font-style: italic; margin-top: 1.5rem; font-size: 1.1rem; color: rgba(244,237,224,0.8); max-width: 38ch; line-height: 1.5;">
+          Trabajamos con productores que conocemos por nombre. El café de origen no es marketing: es trazabilidad real desde la finca hasta tu taza.
+        </p>
+      </div>
+
+      <div>
+        <div class="origin-card">
+          <span class="origin-card__num">N°01</span>
+          <h4 class="origin-card__name">Chiapas — Sierra Madre</h4>
+          <p class="origin-card__notes">Notas a chocolate negro, mora azul y un final con caramelo. Altura: 1,400 msnm.</p>
+        </div>
+
+        <div class="origin-card">
+          <span class="origin-card__num">N°02</span>
+          <h4 class="origin-card__name">Veracruz — Coatepec</h4>
+          <p class="origin-card__notes">Notas a panela, cítricos y nuez. Cuerpo balanceado, acidez media. Altura: 1,200 msnm.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PASTELES -->
+  <div class="section__head reveal" style="margin-top: 2rem;">
+    <span class="section__num">003 — Para acompañar</span>
+    <h2 class="section__title">Pasteles<br /><em>que valen la pena</em>.</h2>
+    <p class="section__kicker">Hechos a mano por La Costra, panadería local. Llegan frescos cada mañana.</p>
+  </div>
+
+  <div class="pastry reveal">
+    <div class="pastry__visual">
+      <div class="pastry__visual-label">Mostrador con pasteles recién horneados, luz natural cálida</div>
+    </div>
+
+    <div>
+      <ul class="pastry__list">
+        <li class="pastry__item">
+          <div>
+            <div class="pastry__name">Cheesecake de cardamomo</div>
+            <span>Base de galleta de mantequilla</span>
+          </div>
+          <span class="pastry__price">$85</span>
+        </li>
+        <li class="pastry__item">
+          <div>
+            <div class="pastry__name">Brownie de chocolate 70%</div>
+            <span>Chocolate de Tabasco, sal de mar</span>
+          </div>
+          <span class="pastry__price">$70</span>
+        </li>
+        <li class="pastry__item">
+          <div>
+            <div class="pastry__name">Pan de elote</div>
+            <span>Receta tradicional, masa húmeda</span>
+          </div>
+          <span class="pastry__price">$55</span>
+        </li>
+        <li class="pastry__item">
+          <div>
+            <div class="pastry__name">Cinnamon roll</div>
+            <span>Glaseado de queso crema</span>
+          </div>
+          <span class="pastry__price">$60</span>
+        </li>
+        <li class="pastry__item">
+          <div>
+            <div class="pastry__name">Galleta de avena y chispas</div>
+            <span>Hecha del día</span>
+          </div>
+          <span class="pastry__price">$35</span>
+        </li>
+      </ul>
+
+      <p class="pastry__partner">Horneado en casa por <strong>La Costra</strong> — Querétaro</p>
+    </div>
+  </div>
+
+</section>
+
+<!-- ======== CONTACTO ======== -->
+<section class="contact" id="contacto">
+  <div class="contact__inner">
+    <div class="contact__head reveal">
+      <span class="contact__num section__num">004 — Visítanos</span>
+      <h2 class="contact__title">Te <em>esperamos</em>.</h2>
+    </div>
+
+    <div class="contact__grid">
+
+      <div class="reveal">
+        <div class="contact__owner">
+          <span class="contact__owner-label">Detrás del mostrador</span>
+          <h3 class="contact__owner-name">Mario Hernández</h3>
+          <p class="contact__owner-role">Fundador y barista — "Mar"</p>
+        </div>
+
+        <ul class="contact__list">
+          <li>
+            <span class="label">Dirección</span>
+            <span class="value">Juriquilla, Querétaro</span>
+          </li>
+          <li>
+            <span class="label">Email</span>
+            <a href="mailto:contacto@cerrocafe.mx" class="value">contacto@cerrocafe.mx</a>
+          </li>
+          <li>
+            <span class="label">Teléfono</span>
+            <a href="tel:+52442XXXXXXX" class="value">442-XXX-XXXX</a>
+          </li>
+          <li>
+            <span class="label">Horario</span>
+            <span class="value">Lun–Dom · 7:30 a 21:00</span>
+          </li>
+        </ul>
+      </div>
+
+      <div class="reveal">
+        <a href="https://instagram.com/cerrocafe.qro" target="_blank" rel="noopener" class="ig-card">
+          <span class="ig-card__label">Instagram</span>
+          <h3 class="ig-card__handle">@cerrocafe.qro</h3>
+          <p class="ig-card__desc">Fotos del día, nuevos lotes y los pasteles que apenas salen del horno.</p>
+          <span class="ig-card__btn">
+            Seguirnos
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M2 7H12M12 7L7 2M12 7L7 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </span>
+        </a>
+
+        <a href="https://maps.google.com/?q=Juriquilla+Querétaro+Cerro+Café" target="_blank" rel="noopener" class="map-cta">
+          <span class="map-cta__label">Cómo llegar</span>
+          <span class="map-cta__text">
+            Ver en Google Maps
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M5 10H15M15 10L10 5M15 10L10 15" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </span>
+        </a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ======== FOOTER ======== -->
+<footer class="footer">
+  <div class="footer__brand">Cerro Café</div>
+  <div>© 2026 — Hecho con cariño en Juriquilla, Querétaro</div>
+</footer>
+
+<script>
+  // Nav: cambiar borde al hacer scroll
+  const nav = document.getElementById('nav');
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 20) nav.classList.add('scrolled');
+    else nav.classList.remove('scrolled');
+  });
+
+  // Scroll-reveal con IntersectionObserver
+  const reveals = document.querySelectorAll('.reveal, .reveal-stagger');
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        io.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.15, rootMargin: '0px 0px -80px 0px' });
+
+  reveals.forEach(el => io.observe(el));
+</script>
+
+</body>
+</html>
